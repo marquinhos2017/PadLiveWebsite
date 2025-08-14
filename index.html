@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>PadLive App</title>
     <style>
         * {
@@ -16,6 +19,12 @@
         body {
             background-color: #0C0C0C;
             color: #fff;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        body.light-mode {
+            background-color: #f6f6f8;
+            color: #0C0C0C;
         }
 
         header {
@@ -31,17 +40,18 @@
             align-items: center;
             padding: 15px 30px;
             z-index: 100;
+            transition: background 0.4s;
         }
 
-        header h1 {
-            color: #F2613F;
-            font-size: 1.5rem;
+        body.light-mode header {
+            background: rgba(255, 255, 255, 0.9);
+            color: #0C0C0C;
         }
 
         nav a {
             margin-left: 20px;
             text-decoration: none;
-            color: #fff;
+            color: inherit;
             font-weight: bold;
             transition: color 0.3s ease;
         }
@@ -62,6 +72,14 @@
             align-items: center;
             text-align: center;
             padding: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            /* Montserrat como fonte principal */
         }
 
         .hero h2 {
@@ -105,12 +123,6 @@
             animation: fadeIn 2s ease forwards;
         }
 
-        .logo {
-            height: 40px;
-            /* Ajusta o tamanho no header */
-            object-fit: contain;
-        }
-
         .btn {
             padding: 14px 28px;
             font-size: 1rem;
@@ -121,13 +133,35 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            animation: pulse 2s infinite;
         }
 
         .btn:hover {
             background: #ff7b5a;
             transform: scale(1.05);
         }
+
+        /* Fundo alternado para sections */
+        .section-info:nth-of-type(odd) {
+            background-color: #1A1A1A;
+            /* fundo escuro */
+        }
+
+        .section-info:nth-of-type(even) {
+            background-color: #222;
+            /* cinza escuro */
+        }
+
+        /* Modo claro */
+        body.light-mode .section-info:nth-of-type(odd) {
+            background-color: #e9e9ec;
+            /* cinza claro */
+        }
+
+        body.light-mode .section-info:nth-of-type(even) {
+            background-color: #f6f6f8;
+            /* quase branco */
+        }
+
 
         .features {
             padding: 80px 20px;
@@ -138,24 +172,52 @@
             text-align: center;
         }
 
+        body.light-mode .features {
+            background: #e9e9ec;
+        }
+
         .feature {
             background: #111;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
             transition: transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: slideUp 0.8s ease forwards;
         }
 
-        .feature:hover {
-            transform: translateY(-5px);
+        body.light-mode .feature {
+            background: #fff;
+            color: #0C0C0C;
         }
 
         .feature h3 {
             margin-bottom: 10px;
             color: #F2613F;
+        }
+
+        .section-info {
+            padding: 80px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+            max-width: auto;
+            margin: auto;
+        }
+
+        .section-info img {
+            max-width: 350px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-text {
+            flex: 1 1 400px;
+        }
+
+        .section-text h2 {
+            color: #F2613F;
+            margin-bottom: 15px;
         }
 
         footer {
@@ -166,35 +228,10 @@
             border-top: 1px solid #222;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        body.light-mode footer {
+            background: #f6f6f8;
+            color: #0C0C0C;
+            border-top: 1px solid #ccc;
         }
 
         @keyframes gradientMove {
@@ -212,12 +249,9 @@
         }
 
         @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 2rem;
-            }
-
-            nav {
-                display: none;
+            .section-info {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -226,14 +260,15 @@
 <body>
 
     <header>
-        <img src="logobranco.png" alt="Logo Pads Ambient" class="logo">
+        <img src="logobranco.png" alt="Logo Pads Ambient" class="logo" style="height:40px;">
         <nav>
             <a href="#home">Início</a>
             <a href="#features">Recursos</a>
-            <a href="#download">Entre em contato</a>
+            <a href="#volume">Controle de Volume</a>
+            <a href="#theme">Tema</a>
         </nav>
+        <button class="btn" onclick="toggleTheme()">Tema</button>
     </header>
-
 
     <section class="hero" id="home">
         <div class="hero-content">
@@ -250,25 +285,50 @@
         </div>
     </section>
 
-
     <section class="features" id="features">
-        <div class="feature" style="animation-delay: 0.2s;">
+        <div class="feature">
             <h3>Som Contínuo</h3>
             <p>Pads sem cortes para manter a atmosfera sonora perfeita durante todo o tempo.</p>
         </div>
-        <div class="feature" style="animation-delay: 0.4s;">
+        <div class="feature">
             <h3>Vários Tons</h3>
             <p>Escolha a tonalidade ideal para acompanhar a música que está tocando.</p>
         </div>
-        <div class="feature" style="animation-delay: 0.6s;">
+        <div class="feature">
             <h3>Transições Suaves</h3>
             <p>Troque entre pads de forma imperceptível, sem quebra na música.</p>
         </div>
     </section>
+    <!-- Nova Section - Tema -->
+    <section class="section-info" id="theme">
+        <img src="tema-black-white.jpg" alt="Tema Black & White do App">
+        <div class="section-text">
+            <h2>Black & White Theme</h2>
+            <p>Com o modo claro e escuro, você pode escolher o visual que mais combina com você,
+                seja para um ambiente mais iluminado ou para um clima intimista no palco.</p>
+        </div>
+    </section>
+    <!-- Nova Section - Controle de Volume -->
+    <section class="section-info" id="volume">
+        <div class="section-text">
+            <h2>Controle de Volume</h2>
+            <p>O aplicativo conta com um controle de volume preciso, permitindo ajustar o som de forma suave
+                para se adaptar ao ambiente e manter o equilíbrio perfeito na sua apresentação.</p>
+        </div>
+        <img src="controle-volume.jpg" alt="Controle de Volume do App">
+    </section>
+
+
 
     <footer>
         &copy; 2025 MusiR. Todos os direitos reservados.
     </footer>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle("light-mode");
+        }
+    </script>
 
 </body>
 
